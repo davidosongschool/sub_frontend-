@@ -1,1 +1,3 @@
-# sub_frontend-
+# sub_frontend
+
+Subcription platform 
