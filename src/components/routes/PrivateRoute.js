@@ -6,7 +6,7 @@ import { Route, Redirect } from 'react-router-dom';
 const PrivateRoute = ({component: Component, auth, ...rest}) => {
     return (
         // Show the component only when the user is logged in
-        // Otherwise, redirect the user to /signin page
+        // Otherwise, redirect the user to login page
         <Route {...rest} render={props => {
             // If still loading user - Display loading 
             if(auth.isLoading) {
@@ -14,9 +14,8 @@ const PrivateRoute = ({component: Component, auth, ...rest}) => {
             } else if (auth.isAuthenticated) {
                 return <Component {...props} />
             }
-            else {
-                return <Redirect to="/login"/>
-                
+            else if (auth.isAuthenticated == false){
+                return <Redirect to="/login"/>                
             } 
            
         }}

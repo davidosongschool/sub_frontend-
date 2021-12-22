@@ -14,12 +14,13 @@ const Sidebar = () => {
 export default Sidebar;
 
 const ContainSideBar = styled.div`
-width: 300px;
-background-color: #1B72E8;
-color: #ffffff;
+width: 250px;
+background-color: #F7FAFC;
+color: #1A1F35;
 min-height: 100vh;
 position: absolute;
 left: 0;
 top: 0;
 `;
+
 

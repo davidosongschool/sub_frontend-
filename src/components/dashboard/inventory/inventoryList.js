@@ -14,15 +14,19 @@ const InventoryList = (props) => {
 
     useEffect(() => {
 
+    const user_id = props.user.user.pk
+    const body = {
+            user_id: user_id
+        }
+
     // Configure API headers
     const config = {
         headers: {
             'Content-Type': 'application/json',
-            'Authorization':  `Token ${token}`,
         }
     }
 
-    axios.post('http://127.0.0.1:8000/inventory/', {}, config)
+    axios.post('http://127.0.0.1:8000/inventory/', body, config)
     .then(res => {
         // Store array of products  
         setproductList(res.data['data']); 

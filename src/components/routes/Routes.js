@@ -1,48 +1,65 @@
 import React from 'react';
-import Dashboard from '../../pages/Dashboard'
+import Dashboard from '../dashboard/Dashboard'
 import ContactUs from '../../pages/ContactUs'
+import CreateProduct from '../dashboard/inventory/add product/createProduct'
+import Inventory from '../dashboard/inventory/inventory';
 import LoginPage from '../auth/login'
+import Loading from '../../components/loading/loading'
+import Storefront from '../storefront/storefront';
+import SingleProduct from '../storefront/singleproduct';
 import TestPayment from '../../components/testPayment'
+import Signup from '../auth/signup/signup'
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import Nav from '../../components/nav';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import  PrivateRoute  from '../routes/PrivateRoute'
+import PrivateRoute from '../routes/PrivateRoute'
 
 const RouteWrapper = (props) => {
 
-const apiCall = props.apiCall;
-const auth = props.auth
-return (
+  const auth = props.auth
+  return (
+    <div>
+      {props.loading ?
+        <Loading />
+        :
         <Router>
-        <Nav />
-        <Switch>
-        <React.Fragment>
-        <Route exact path='/contact'>
-        <ContactUs /> 
-        </Route>
-        <Route exact path='/payment'>
-        <TestPayment /> 
-        </Route>
-        <Route exact path='/login'>
-        {auth ? <Redirect to="" /> :  <LoginPage />}
-        </Route>
-        {apiCall
-        ?<PrivateRoute exact path='/' component={Dashboard}/>
-        : <h1>Wait...</h1> }
-        </React.Fragment>
-        </Switch>
+          <Switch>
+            <React.Fragment>
+              <Route exact path='/payment'>
+                <TestPayment />
+              </Route>
+              <Route exact path='/signup'>
+                {auth ? <Redirect to="" /> : <Signup />}
+              </Route>
+              <Route exact path='/login'>
+                {auth ? <Redirect to="" /> : <LoginPage />}
+              </Route>
+              <PrivateRoute exact path='/inventory' component={Inventory} />
+              <PrivateRoute exact path='/inventory/add' component={CreateProduct} />
+              <PrivateRoute exact path='/' component={Dashboard} />
+              <Route exact path='/storefront/:id'>
+                <Storefront />
+              </Route>
+              <Route exact path='/storefront/:id/:product_id'>
+                <SingleProduct />
+              </Route>
+
+            </React.Fragment>
+          </Switch>
         </Router>
-)};
+      }
+    </div>
+  )
+};
 
 const mapStateToProps = state => ({
-    apiCall: state.auth.apiCall,
-    auth: state.auth.isAuthenticated,
+  auth: state.auth.isAuthenticated,
+  loading: state.loading.loading
 });
 
 export default connect(mapStateToProps)(RouteWrapper);

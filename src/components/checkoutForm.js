@@ -38,7 +38,7 @@ const CheckoutForm = (props) => {
 
 
 
-    // Once they payment method has been created - CReate a customer associated with it 
+    // Once they payment method has been created - Create a customer associated with it 
 
     const token = props.user.key
     console.log(token)

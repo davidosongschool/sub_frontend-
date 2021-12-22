@@ -11,8 +11,8 @@ LOGIN_FAIL,
 LOGOUT_SUCCESS,
 REGISTER_SUCCESS,
 REGISTER_FAIL,
-GET_ERRORS,
-CLEAR_ERRORS
+VERIFY_EMAIL,
+VERIFY_EMAIL_COMPLETE,
 }from '../actions/types'
 
 let key;
@@ -29,6 +29,7 @@ const initialState = {
     isLoading: false, 
     user: null,
     apiCall: false,
+    loginFail: false
 }
 
 const Fnc = (state = initialState, action) => {
@@ -55,20 +56,46 @@ const Fnc = (state = initialState, action) => {
                 isLoading: false,
                 isAuthenticated: true,
                 apiCall: true,
+                loginFail: false
             };    
         case AUTH_ERROR:
-        case LOGIN_FAIL:
         case LOGOUT_SUCCESS:
         case REGISTER_FAIL:
+           if (localStorage.getItem('token') != null) { 
            localStorage.removeItem('token')
+           }
             return {
                 ...state,
                 key: null,
                 user: null,
                 isAuthenticated: false, 
                 isLoading: false,
-                apiCall: true,
-            }           
+                verifyEmail: false,
+                loginFail: false
+            };     
+        case LOGIN_FAIL:
+            if (localStorage.getItem('token') != null) { 
+                localStorage.removeItem('token')
+                }
+                 return {
+                     ...state,
+                     key: null,
+                     user: null,
+                     isAuthenticated: false, 
+                     isLoading: false,
+                     verifyEmail: false,
+                     loginFail: true
+                 };     
+        case VERIFY_EMAIL: 
+            return {
+                ...state,
+                verifyEmail: false
+            };  
+            case VERIFY_EMAIL_COMPLETE: 
+            return {
+                ...state,
+                verifyEmail: true
+            }    
         default:
             return state;
     }

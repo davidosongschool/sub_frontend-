@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
 // Bootstrap CSS
 import 'bootstrap/dist/css/bootstrap.css';
+import "react-toggle/style.css" 
+import '../node_modules/font-awesome/css/font-awesome.min.css'; 
 
 
 ReactDOM.render(

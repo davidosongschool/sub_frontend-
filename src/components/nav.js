@@ -2,9 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import logo from '../img/subify.png';
 import {Link} from 'react-router-dom';
-import {Navbar, Nav, Container} from 'react-bootstrap';
-import RegisterModal from './auth/registerModal' 
+import {Navbar, Nav, Container, Button} from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { logoutUser } from '../actions/authActions';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSignOutAlt, faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
 
 const Navi = (props) => {
@@ -15,16 +17,15 @@ const Navi = (props) => {
         <StyledNav>
         <Container>
         <Navbar expand="lg">
-        <Navbar.Brand href="#home"><img src={logo} alt="subify logo"></img></Navbar.Brand>
+        <Navbar.Brand href="#home">Subify</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto navlinks">
-        <Link to="/" className="link">Home</Link>
-        <Link to="/contact" className="link">Contact</Link>
+        <FontAwesomeIcon icon={faQuestionCircle} className="icon-style-1"/>
         {isLoggedIn? 
-        <Link to="/" className="link">Welcome</Link>
+        <span onClick={props.logoutUser}><FontAwesomeIcon icon={faSignOutAlt} className="icon-style-1"/></span>
         :
-        <RegisterModal />
+        <Link to="/signup" className="link">Signup</Link>
         }
         </Nav>
         </Navbar.Collapse>
@@ -37,33 +38,27 @@ const Navi = (props) => {
 }
 
 const StyledNav = styled.nav`
-min-height: 8vh;
+
+border-bottom: 1px solid lightgray;
 display: flex;
-justify-content: space-between;
-margin: auto;
-align-items: center;
-padding: 1rem 5rem;
-
-    a {
-        text-decoration: none;
-        color: rgb(1,48,136);
-
-    }
+width: 100%;
+display:flex;
+justify-content: right;
+line-height: 50px;
 
     .navlinks {
     list-style: none;
-    display: flex;
-    font-size: 1rem;
+    display: inline-block;
+    font-size: 16px;
+    margin-left: auto;
+    color: rgba(1,1,1,0.4);
+
     }
 
-    .link {
-        padding-left: 10rem;
-        position: relative;
-        color: #333333;
-    }
+    .icon-style-1 {
+        margin-left: 10px;
+        margin-right: 10px;
 
-    img {
-        width: 200px;
     }
 
 `;
@@ -78,4 +73,4 @@ const mapStateToProps = state => ({
 
 
 // Connects the component to the redux store - Pass register action 
-export default connect(mapStateToProps,)(Navi);
+export default connect(mapStateToProps, {logoutUser} )(Navi);

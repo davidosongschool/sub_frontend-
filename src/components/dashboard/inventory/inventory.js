@@ -1,19 +1,25 @@
 import styled from 'styled-components';
 import InventoryList from './inventoryList';
-import CreateProduct from '../inventory/createProduct'
+import InventoryMenu from './inventoryMenu';
+import Sidebar from '../sidebar/sidebar';
+import Nav from '../../nav';
 
 
 const Inventory = () => {
 
-    return (
+return (
+<div>
+<Nav />
 <ContainInventory>
-<CreateProduct />
+<Sidebar />
+<InventoryMenu />
 <InventoryList />
 </ContainInventory>
+</div>    
     
     )};
 
-export default Inventory ;
+export default Inventory;
 
 const ContainInventory = styled.div`
 margin-left: 310px;
